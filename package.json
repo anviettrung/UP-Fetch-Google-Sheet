@@ -1,0 +1,26 @@
+{
+  "name": "com.avt.tool.fetchgooglesheet",
+  "version": "1.0.0",
+  "description": "Provides a drop-down on toolbar that quick select scenes in build list",
+  "displayName": "Fetch Google Sheet",
+  "unity": "2020.3",
+  "type": "tool",
+  "author": {
+    "name": "An Viet Trung",
+    "email": "an.viettrung.m@gmail.com"
+  },
+  "keywords": [
+    "tool",
+    "google",
+    "fetch",
+    "sheet"
+  ],
+  
+  "samples": [
+    {
+      "displayName": "Read Data Sample",
+      "description": "description <missing>",
+      "path": "Samples~"
+    }
+  ]
+}
