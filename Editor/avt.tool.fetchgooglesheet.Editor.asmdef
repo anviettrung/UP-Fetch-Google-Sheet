@@ -2,7 +2,8 @@
     "name": "avt.tool.fetchgooglesheet.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:478a2357cc57436488a56e564b08d223"
+        "GUID:478a2357cc57436488a56e564b08d223",
+        "GUID:6a2bf41748400af4b8b5d45a3f853b88"
     ],
     "includePlatforms": [
         "Editor"
