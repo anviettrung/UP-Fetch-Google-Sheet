@@ -17,5 +17,7 @@ namespace AVT.FetchGoogleSheet
         
         [Regex(@"^(?:[A-Za-z0-9_]+!)?[A-Z]+[1-9]\d*(?::[A-Z]+[1-9]\d*)?$", "Should contain sheet range using A1 notation!")]
         public string range;
+
+        public string FetchUrl => $"{source}?output={format.GetName()}&single=true&gid={gid}";
     }
 }
