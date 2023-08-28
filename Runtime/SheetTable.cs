@@ -16,6 +16,8 @@ namespace AVT.FetchGoogleSheet
         }
 
         public int RecordCount => data.Count;
+        public int FieldCount => RecordCount > 0 ? data[0].FieldCount : 0;
+        public List<SheetRecord> Records => data;
         
         public override string ToString()
         {
@@ -36,17 +38,17 @@ namespace AVT.FetchGoogleSheet
 
         public SheetTable Trim(SheetRange range)
         {
-            var endBound = range.end.y + 1;
-            if (endBound < data.Count)
-                data.RemoveRange(endBound,  data.Count - endBound);
+            var end = range.end.y + 1;
+            if (end < data.Count)
+                data.RemoveRange(end,  data.Count - end);
             data.RemoveRange(0, range.start.y);
 
-            endBound = range.end.x + 1;
+            end = range.end.x + 1;
             foreach (var record in data)
             {
-                if (endBound < record.Count)
+                if (end < record.FieldCount)
                 {
-                    record.RemoveRange(endBound, record.Count - endBound);
+                    record.RemoveRange(end, record.FieldCount - end);
                 }
                 record.RemoveRange(0, range.start.x);
             }

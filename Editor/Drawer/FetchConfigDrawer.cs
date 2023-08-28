@@ -10,7 +10,6 @@ namespace AVT.FetchGoogleSheet
     public class FetchConfigDrawer : PropertyDrawer
     {
         private bool foldout = true;
-        private bool isFetching;
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -28,12 +27,19 @@ namespace AVT.FetchGoogleSheet
                 // Draw the property fields
                 var source = property.FindPropertyRelative("source");
                 EditorGUILayout.PropertyField(source);
+                
                 var gid = property.FindPropertyRelative("gid");
                 EditorGUILayout.PropertyField(gid);
-                var range = property.FindPropertyRelative("range");
-                EditorGUILayout.PropertyField(range);
+                
                 var format = property.FindPropertyRelative("format");
                 EditorGUILayout.PropertyField(format);
+                
+                var hasHeader = property.FindPropertyRelative("hasHeader");
+                EditorGUILayout.PropertyField(hasHeader);
+                
+                var range = property.FindPropertyRelative("range");
+                EditorGUILayout.PropertyField(range);
+                var rangeValue = range.stringValue;
                 
                 var fetch = fieldInfo.GetCustomAttribute<FetchAttribute>();
                 if (fetch != null)
@@ -42,8 +48,8 @@ namespace AVT.FetchGoogleSheet
                     var targetObject = property.serializedObject.targetObject;
                     
                     // Use reflection to find and invoke the function
-                    var methodInfo = targetObject.GetType().GetMethod(fetch.functionName);
-                    if (isFetching)
+                    var methodInfo = targetObject.GetType().GetMethod(fetch.targetName);
+                    if (FetchGoogleSheetUtility.IsFetching)
                     {
                         LogWarningLabel("Wait for fetching...");
                     }
@@ -56,14 +62,10 @@ namespace AVT.FetchGoogleSheet
                             // Draw the button
                             if (GUILayout.Button("Fetch"))
                             {
-                                isFetching = true;
-
-                                var rangeValue = range.stringValue;
                                 var formatValue = format.ToSheetFormat();
-                                FetchGoogleSheetUtility.GetRawTextFromUrl(GetFetchUrl(source, format, gid), 
+                                FetchGoogleSheetUtility.GetRawTextFromUrl(GetFetchUrl(source.stringValue, format, gid.stringValue), 
                                     (success, text) =>
                                     {
-                                        isFetching = false;
                                         if (!success)
                                             return;
                                 
@@ -77,12 +79,12 @@ namespace AVT.FetchGoogleSheet
                         }
                         else
                         {
-                            LogWarningLabel($"Function \"{fetch.functionName}\" not has correct parameters!");
+                            LogWarningLabel($"Function \"{fetch.targetName}\" not has correct parameters!");
                         }
                     }
                     else
                     {
-                        LogWarningLabel($"Function \"{fetch.functionName}\" not found!");
+                        LogWarningLabel($"Function \"{fetch.targetName}\" not found!");
                     }
                 }
                 
@@ -97,8 +99,8 @@ namespace AVT.FetchGoogleSheet
             EditorGUI.EndProperty();
         }
         
-        private static string GetFetchUrl(SerializedProperty source, SerializedProperty format, SerializedProperty gid)
-            => $"{source.stringValue}?output={format.ToSheetFormat().GetName()}&single=true&gid={gid.stringValue}";
+        private static string GetFetchUrl(string source, SerializedProperty format, string gid)
+            => $"{source}?output={format.ToSheetFormat().GetName()}&single=true&gid={gid}";
 
         private static bool CheckParameters(IReadOnlyList<ParameterInfo> para)
         {
@@ -107,22 +109,6 @@ namespace AVT.FetchGoogleSheet
             
             return para[0].ParameterType == typeof(SheetTable);
         }
-
-        // private static SheetFormat ToSheetFormat(SerializedProperty propFormat)
-        // {
-        //     return (SheetFormat)Enum.ToObject(typeof(SheetFormat), propFormat.enumValueIndex);
-        // }
-        //
-        // private static string SheetFormatToString(SerializedProperty propFormat)
-        // {
-        //     var format = (SheetFormat)Enum.ToObject(typeof(SheetFormat), propFormat.enumValueIndex);
-        //     return format switch
-        //     {
-        //         SheetFormat.TSV => "tsv",
-        //         SheetFormat.CSV => "csv",
-        //         _ => "csv"
-        //     };
-        // }
 
         private static void LogWarningLabel(string text)
         {

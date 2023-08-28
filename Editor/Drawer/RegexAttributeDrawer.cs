@@ -12,9 +12,8 @@ namespace AVT.FetchGoogleSheet
 
             if (property.propertyType == SerializedPropertyType.String)
             {
-                position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
                 EditorGUI.BeginChangeCheck();
-                var newValue = EditorGUI.TextField(position, property.stringValue);
+                var newValue = EditorGUI.TextField(position, label, property.stringValue);
                 
                 if (EditorGUI.EndChangeCheck() && regex != null)
                 {

@@ -20,7 +20,10 @@ namespace AVT.FetchGoogleSheet
             set => data[map[key]] = value;
         }
 
-        public int Count => data.Count;
+        public int FieldCount => data.Count;
+
+        public List<string> Fields => data;
+        public List<string> Keys => map.Keys.ToList();
 
         public override string ToString()
         {

@@ -16,7 +16,7 @@ namespace AVT.FetchGoogleSheet
     {
         #region API
 
-        public static void SheetMatrixToList<T>(SheetTable sheetMatrix, List<T> list) where T : IGoogleSheetDataSetter, new()
+        public static void SheetTableToList<T>(SheetTable sheetMatrix, List<T> list) where T : IGoogleSheetDataSetter, new()
         {
             var propKeys = sheetMatrix[0].data;
             
