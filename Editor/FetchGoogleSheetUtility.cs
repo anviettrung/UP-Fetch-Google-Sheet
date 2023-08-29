@@ -31,6 +31,8 @@ namespace AVT.FetchGoogleSheet
             Debug.Log($"<color=yellow><b>GET</b></color> data from Google Sheet\n<i>{url}</i>");
                 
             yield return webRequest.SendWebRequest();
+            
+            IsFetching = false;
 
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
@@ -42,8 +44,6 @@ namespace AVT.FetchGoogleSheet
                 onGetResult?.Invoke(false, webRequest.result.ToString());
                 Debug.Log($"<color=red><b>FAILED</b></color> get data from Google Sheet: <color=red>{webRequest.result.ToString()}</color>\n<i>{url}</i>");
             }
-            
-            IsFetching = false;
         }
 
         #endregion

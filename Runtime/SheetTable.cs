@@ -7,7 +7,7 @@ namespace AVT.FetchGoogleSheet
     public class SheetTable
     {
         public bool hasHeader;
-        internal List<SheetRecord> data = new();
+        internal List<SheetRecord> data = new List<SheetRecord>();
 
         public SheetRecord this[int key]
         {

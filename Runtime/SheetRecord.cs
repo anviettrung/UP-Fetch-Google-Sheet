@@ -5,8 +5,8 @@ namespace AVT.FetchGoogleSheet
 {
     public class SheetRecord
     {
-        internal Dictionary<string, int> map = new();
-        internal List<string> data = new();
+        internal Dictionary<string, int> map = new Dictionary<string, int>();
+        internal List<string> data = new List<string>();
         
         public string this[int key]
         {
