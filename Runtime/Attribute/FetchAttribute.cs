@@ -16,7 +16,7 @@ namespace AVT.FetchGoogleSheet
         public enum TargetType
         {
             METHOD,
-            PROPERTY
+            //PROPERTY
         }
     }
 }

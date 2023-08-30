@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace AVT.FetchGoogleSheet
 {
@@ -94,12 +92,12 @@ namespace AVT.FetchGoogleSheet
                 {
                     case FetchAttribute.TargetType.METHOD:
                         DrawFetchButtonWithMethod(contentRect, property, fetch);
-                        break;
-                    case FetchAttribute.TargetType.PROPERTY:
-                        DrawFetchButtonWithProperty(contentRect, property, fetch);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                         break;
+                    // case FetchAttribute.TargetType.PROPERTY:
+                    //     DrawFetchButtonWithProperty(contentRect, property, fetch);
+                    //     break;
+                    // default:
+                    //     throw new ArgumentOutOfRangeException();
                 }
             }
             
@@ -120,11 +118,14 @@ namespace AVT.FetchGoogleSheet
 
         #region Fetch Attribute
 
+        #region Fetch Button With Method
+
         private void DrawFetchButtonWithMethod(Rect position, SerializedProperty property, FetchAttribute fetch)
         {
             var targetObject = property.serializedObject.targetObject;
             var config = (FetchConfig)fieldInfo.GetValue(targetObject);
-            var method = targetObject.GetType().GetMethod(fetch.targetName);
+            var method = targetObject.GetType().GetMethod(fetch.targetName, 
+                BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
 
             if (method == null)
             {
@@ -149,8 +150,8 @@ namespace AVT.FetchGoogleSheet
                         if (!success)
                             return;
                             
-                        var block = config.range.ToSheetRange().Validate();
-                        var table = new SheetTable(text, config).Trim(block);
+                        var sheetRange = config.range.ToSheetRange().Validate();
+                        var table = new SheetTable(text, config).Trim(sheetRange);
 
                         object[] para;
                         switch (methodTypeId)
@@ -173,34 +174,6 @@ namespace AVT.FetchGoogleSheet
                     });
             }
         }
-
-        private void DrawFetchButtonWithProperty(Rect position, SerializedProperty property, FetchAttribute fetch)
-        {
-            var targetObject = property.serializedObject.targetObject;
-            var config = (FetchConfig)fieldInfo.GetValue(targetObject);
-            var field = targetObject.GetType().GetField(fetch.targetName);
-            
-            if (field == null)
-            {
-                LogWarningLabel(position, $"Field \"{fetch.targetName}\" not found!");
-                return;
-            }
-            
-            // Draw the button
-            if (GUI.Button(position, "Fetch"))
-            {
-                FetchGoogleSheetUtility.GetRawTextFromUrl(config.FetchUrl, 
-                    (success, text) =>
-                    {
-                        if (!success)
-                            return;
-                            
-                        var block = config.range.ToSheetRange().Validate();
-                        var table = new SheetTable(text, config).Trim(block);
-                        //FetchGoogleSheet.SheetTableToList(table, field);
-                    });
-            }
-        }
         
         private static int CheckMethodParameters(IReadOnlyList<ParameterInfo> para)
         {
@@ -209,15 +182,85 @@ namespace AVT.FetchGoogleSheet
                 0 => 0,
                 1 => para[0].ParameterType == typeof(SheetTable) ? 1 : -1,
                 2 => para[0].ParameterType == typeof(SheetTable) 
-                && para[1].ParameterType == typeof(FetchConfig) ? 2 : -1,
+                     && para[1].ParameterType == typeof(FetchConfig) ? 2 : -1,
                 _ => -1
             };
         }
 
-        private static bool CheckField(FieldInfo field)
-        {
-            return true;
-        }
+        #endregion
+
+        #region Fetch Button With Property
+
+        // private void DrawFetchButtonWithProperty(Rect position, SerializedProperty property, FetchAttribute fetch)
+        // {
+        //     var targetObject = property.serializedObject.targetObject;
+        //     var config = (FetchConfig)fieldInfo.GetValue(targetObject);
+        //     var field = targetObject.GetType().GetField(fetch.targetName,
+        //         BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
+        //     
+        //     if (field == null)
+        //     {
+        //         LogWarningLabel(position, $"Field \"{fetch.targetName}\" not found!");
+        //         return;
+        //     }
+        //
+        //     var fieldTypeId = CheckField(field, out var listType);
+        //     if (fieldTypeId < 0)
+        //     {
+        //         LogWarningLabel(position, string.Format(LogById(fieldTypeId), fetch.targetName));
+        //         return;
+        //     }
+        //
+        //     var fieldObject = field.GetValue(targetObject);
+        //     var myList = Convert.ChangeType(fieldObject, listType);
+        //     
+        //     // Draw the button
+        //     if (GUI.Button(position, "Fetch"))
+        //     {
+        //         FetchGoogleSheetUtility.GetRawTextFromUrl(config.FetchUrl, 
+        //             (success, text) =>
+        //             {
+        //                 if (!success)
+        //                     return;
+        //                     
+        //                 var block = config.range.ToSheetRange().Validate();
+        //                 var table = new SheetTable(text, config).Trim(block);
+        //                 FetchGoogleSheet.SheetTableToList(table, myList);
+        //             });
+        //     }
+        // }
+
+        // private static int CheckField(FieldInfo field, out Type listType)
+        // {
+        //     listType = null;
+        //     if (field != null && field.FieldType.IsGenericType)
+        //     {
+        //         var genericType = field.FieldType.GetGenericTypeDefinition();
+        //
+        //         if (genericType == typeof(List<>))
+        //         {
+        //             // The field is of type List<T>
+        //             var eType = field.FieldType.GetGenericArguments()[0];
+        //             if (eType == typeof(string) || eType == typeof(int) || eType == typeof(float) || eType == typeof(bool))
+        //             {
+        //                 listType = typeof(List<>).MakeGenericType(eType);
+        //                 return 1;
+        //             }
+        //             
+        //             if(typeof(IGoogleSheetDataSetter).IsAssignableFrom(eType))
+        //             {
+        //                 listType = typeof(List<>).MakeGenericType(eType);
+        //                 return 2;
+        //             }
+        //
+        //             return -3;
+        //         }
+        //     }
+        //     
+        //     return -2;
+        // }
+        
+        #endregion
 
         #endregion
 
@@ -228,6 +271,8 @@ namespace AVT.FetchGoogleSheet
             return errorId switch
             {
                 -1 => "Method \"{0}\" has incorrect parameters!",
+                -2 => "Field \"{0}\" is not a List!",
+                -3 => "Field \"{0}\" should be List of T, where T is string, int, float, boolean or IGoogleSheetDataSetter!",
                 _ => "None"
             };
         }
@@ -238,7 +283,7 @@ namespace AVT.FetchGoogleSheet
             EditorGUI.LabelField(position, text);
             GUI.color = Color.white;
         }
-
+        
         #endregion
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "com.avt.tool-fetch-google-sheet",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "displayName": "Fetch Google Sheet",
   "description": "Fetch data from Google Sheet to Unity.",
   "unity": "2020.3",
@@ -20,9 +20,8 @@
   ],
   "samples": [
     {
-      "displayName": "Read Data Sample",
-      "description": "description <missing>",
-      "path": "Samples~"
+      "displayName": "Fetch using Attribute",
+      "path": "Samples~/Fetch using Attribute"
     }
   ]
 }

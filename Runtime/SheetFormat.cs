@@ -1,5 +1,4 @@
 using System;
-using UnityEditor;
 
 namespace AVT.FetchGoogleSheet
 {
@@ -11,13 +10,6 @@ namespace AVT.FetchGoogleSheet
     
     public static class SheetFormatExtension
     {
-        #if UNITY_EDITOR
-        public static SheetFormat ToSheetFormat(this SerializedProperty property)
-        {
-            return (SheetFormat)Enum.ToObject(typeof(SheetFormat), property.enumValueIndex);
-        }
-        #endif
-        
         public static char GetSeparator(this SheetFormat format)
         {
             return format switch

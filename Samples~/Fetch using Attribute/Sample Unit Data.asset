@@ -9,19 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec3de0d223eecd6438b4b46501f943a8, type: 3}
-  m_Name: Test Data 1
+  m_Script: {fileID: 11500000, guid: c7c119017f4f8bd49a76951b7e4befe8, type: 3}
+  m_Name: Sample Unit Data
   m_EditorClassIdentifier: 
-  fetchUnitConfig:
-    source: https://docs.google.com/spreadsheets/d/e/2PACX-1vTyp8aCVqtoQN9JKeCyrsXk_edIMwCE4iae2ZJk6-Wt1D4_tRlFTLGd4JOHKrr9ace1jD7bmDBf99vu/pub
-    gid: 0
-    format: 1
-    hasHeader: 0
-    range: A1:C5
-  fetdshUnitConfig:
+  fetchConfig:
     source: https://docs.google.com/spreadsheets/d/e/2PACX-1vTyp8aCVqtoQN9JKeCyrsXk_edIMwCE4iae2ZJk6-Wt1D4_tRlFTLGd4JOHKrr9ace1jD7bmDBf99vu/pub
     gid: 0
     format: 0
-    hasHeader: 0
-    range: A1:B2
+    hasHeader: 1
+    range: A1:C5
   units: []
