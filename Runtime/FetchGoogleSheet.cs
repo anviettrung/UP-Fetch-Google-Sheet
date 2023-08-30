@@ -16,17 +16,25 @@ namespace AVT.FetchGoogleSheet
     {
         #region API
 
-        public static void SheetTableToList<T>(SheetTable sheetMatrix, List<T> list) where T : IGoogleSheetDataSetter, new()
+        public static void SheetTableToList<T>(SheetTable table, List<T> list) where T : IGoogleSheetDataSetter, new()
         {
-            var propKeys = sheetMatrix[0].data;
-            
+            // var propKeys = table[0].data;
+            //
+            // list.Clear();
+            // for (var i = 1; i < table.RecordCount; i++)
+            // {
+            //     var record = new T();
+            //     var propValues = table[i].data;
+            //     record.SetDataRecord(new SheetRecord(propKeys, propValues));
+            //     list.Add(record);
+            // }
+
             list.Clear();
-            for (var i = 1; i < sheetMatrix.RecordCount; i++)
+            foreach (var record in table.Records)
             {
-                var record = new T();
-                var propValues = sheetMatrix[i].data;
-                record.SetDataFromSheet(new SheetRecord(propKeys, propValues));
-                list.Add(record);
+                var recordT = new T();
+                recordT.SetDataFromSheet(record);
+                list.Add(recordT);
             }
 #if UNITY_EDITOR
             AssetDatabase.SaveAssets();

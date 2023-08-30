@@ -6,7 +6,9 @@ namespace AVT.FetchGoogleSheet
 {
     public class SheetTable
     {
-        public bool hasHeader;
+        public bool HasHeader { get; private set; }
+        public SheetFormat Format { get; private set; }
+        
         internal List<SheetRecord> data = new List<SheetRecord>();
 
         public SheetRecord this[int key]
@@ -28,12 +30,40 @@ namespace AVT.FetchGoogleSheet
             }
             return res;
         }
-        
-        public SheetTable(string sheetText, SheetFormat format = SheetFormat.CSV)
+
+        public SheetTable(string sheetText, FetchConfig config)
         {
-            var rows = sheetText.ToRows();
-            data.Capacity = rows.Length;
-            data.AddRange(rows.Select(t => new SheetRecord(t.ToCells(format))));
+            HasHeader = config.hasHeader;
+            Format = config.format;
+            
+            Init(sheetText);
+        }
+
+        public SheetTable(string sheetText, SheetFormat format = SheetFormat.TSV, bool hasHeader = true)
+        {
+            HasHeader = hasHeader;
+            Format = format;
+            
+            Init(sheetText);
+        }
+        
+        private void Init(string sheetText)
+        {
+            var records = sheetText.ToRows().ToList();
+            data.Capacity = records.Count;
+
+            if (HasHeader && records.Count > 0)
+            {
+                var keys = records[0].ToCells(Format);
+                records.RemoveAt(0);
+                data.AddRange(records.Select(t => 
+                    new SheetRecord(keys, t.ToCells(Format))));
+            }
+            else
+            {
+                data.AddRange(records.Select(t 
+                    => new SheetRecord(t.ToCells(Format))));
+            }
         }
 
         public SheetTable Trim(SheetRange range)
