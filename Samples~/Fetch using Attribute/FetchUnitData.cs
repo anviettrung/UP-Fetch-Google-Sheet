@@ -7,8 +7,8 @@ using UnityEngine;
 
 namespace AVT.FetchGoogleSheet
 {
-    [CreateAssetMenu]
-    public class SampleFetchUsingAttribute : ScriptableObject
+    [CreateAssetMenu(menuName = "Fetch Google Sheet Sample/Fetch Unit Data")]
+    public class FetchUnitData : ScriptableObject
     {
         [Fetch("FetchUnit")] 
         public FetchConfig fetchConfig;
@@ -18,6 +18,24 @@ namespace AVT.FetchGoogleSheet
         private void FetchUnit(SheetTable table)
         {
             FetchGoogleSheet.SheetTableToList(table, units);
+        }
+        
+        // ---------------------------------------------------------------------
+        
+        [Fetch("FetchSuccess")] 
+        public FetchConfig customFetchConfig;
+        
+        private void FetchSuccess(SheetTable table, FetchConfig config)
+        {
+            for (var i = 0; i < table.RecordCount; i++)
+            {
+                for (var j = 0; j < table.FieldCount; j++)
+                {
+                    Debug.Log($"[{i},{j}] {table[i].Keys[j]} : {table[i][j]}");
+                }
+            }
+            
+            Debug.Log(config);
         }
     }
     

@@ -19,7 +19,9 @@ namespace AVT.FetchGoogleSheet
 
         public int RecordCount => data.Count;
         public int FieldCount => RecordCount > 0 ? data[0].FieldCount : 0;
+        
         public List<SheetRecord> Records => data;
+        public List<string> Keys => HasHeader ? data[0].Keys : null;
         
         public override string ToString()
         {
