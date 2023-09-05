@@ -12,8 +12,12 @@ Git Url to install: https://github.com/anviettrung/UP-Fetch-Google-Sheet.git
 
 ## How to use
 
+<a href="url" onClick="return false;">DOTween.Sequence</a>
+
+<a href="url">static DOTween.Sequence()</a>
+
 <details>
-  <summary> <a href="url">static DOTween.Sequence()</a> </summary>
+  <summary> <a href="aka">static DOTween.Sequence()</a> </summary>
 
   > Returns a usable Sequence which you can store and add tweens to.
   > ```
