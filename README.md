@@ -135,3 +135,14 @@ To import, navigate to `Window` -> `Package Manager`, select the **Fetch Google 
 > The range above is `A1:C5`.
   
 </details>
+
+<details>
+  <summary> Why do I have to choose the sheet format, and what is the difference? </summary>
+  
+> A published sheet is just a plain text file presents a tabular data. In this file, data is organized into rows and columns, where each row represents a record, and each column represents a field or attribute.
+>
+> The sheet format tells us how values in each cell of the same row are separated from each other. In the CSV format, it's the comma, while in the TSV format, it's the tab character.
+>
+> For most cases, you can use either CSV or TSV for the sheet format, and there is no difference between them. However, when your cells contain a comma or tab character, you may encounter issues. You should choose the format that does not conflict with your content.
+  
+</details>
