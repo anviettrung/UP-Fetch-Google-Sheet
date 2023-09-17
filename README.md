@@ -83,3 +83,12 @@ public struct UnitData : IGoogleSheetDataSetter
 
 <img width="380" alt="image" src="https://github.com/anviettrung/UP-Fetch-Google-Sheet/assets/40160468/4b28183b-7f44-42db-a4ca-090313e52bde">
 
+## Sample
+
+Import the samples in the package to learn more ways to fetching different kinds of data.
+
+To import, navigate to **Window -> Package Manager**, select the **Fetch Google Sheet** package, and click the `Import` button under the **Samples** section.
+
+<img width="238" alt="image" src="https://github.com/anviettrung/UP-Fetch-Google-Sheet/assets/40160468/791bb4ae-24bb-4da2-b49d-fd94a79d3a70">
+
+## Frequently Asked Questions
