@@ -87,8 +87,25 @@ public struct UnitData : IGoogleSheetDataSetter
 
 Import the samples in the package to learn more ways to fetching different kinds of data.
 
-To import, navigate to **Window -> Package Manager**, select the **Fetch Google Sheet** package, and click the `Import` button under the **Samples** section.
+To import, navigate to `Window` -> `Package Manager`, select the **Fetch Google Sheet** package, and click the `Import` button under the **Samples** section.
 
 <img width="238" alt="image" src="https://github.com/anviettrung/UP-Fetch-Google-Sheet/assets/40160468/791bb4ae-24bb-4da2-b49d-fd94a79d3a70">
 
 ## Frequently Asked Questions
+
+<details>
+  <summary> How can I find the source URL of a published sheet? </summary>
+
+  > On your sheet, navigate to `File` -> `Share` -> `Publish to web`.
+  > 
+  > <img width="391" alt="image" src="https://github.com/anviettrung/UP-Fetch-Google-Sheet/assets/40160468/f1b7da69-e5c6-4ae0-b166-13b22d8814a8">
+  >
+  > Select `Entire Document` and press the `Publish` button.
+  >
+  > <img width="278" alt="image" src="https://github.com/anviettrung/UP-Fetch-Google-Sheet/assets/40160468/428d3691-69cd-4c11-82cc-7cc50890da4a">
+  >
+  > Copy the link below and paste into **Source** field of fetch config.
+  >
+  > <img width="519" alt="image" src="https://github.com/anviettrung/UP-Fetch-Google-Sheet/assets/40160468/d8ffe081-6d6a-451e-a29e-f04aa2d72560">
+  
+</details>
