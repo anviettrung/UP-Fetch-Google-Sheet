@@ -109,3 +109,29 @@ To import, navigate to `Window` -> `Package Manager`, select the **Fetch Google 
   > <img width="519" alt="image" src="https://github.com/anviettrung/UP-Fetch-Google-Sheet/assets/40160468/d8ffe081-6d6a-451e-a29e-f04aa2d72560">
   
 </details>
+
+<details>
+  <summary> What is Gid? </summary>
+
+> Gid is the ID of the sheet tab. You can find the ID of each tab near the end of the URL (the first tab has an ID of 0 by default).
+>
+> For example, we have a URL:
+>
+> https://docs.google.com/spreadsheets/d/.../edit#gid=1286475826
+>
+> The Gid of this sheet tab is `1286475826`
+  
+</details>
+
+<details>
+  <summary> What is Range and A1 notation? </summary>
+  
+> A range in Google Sheets refers to a specific group of cells within a spreadsheet. It is defined by the combination of the column letters and row numbers that encompass the cells you want to include (which is A1 notation style).
+>
+> You can find the range string by selecting the range you want and copy the string at the top-left corner.
+>
+> <img width="352" alt="image" src="https://github.com/anviettrung/UP-Fetch-Google-Sheet/assets/40160468/2fda61c3-a6ac-427f-9deb-be7eb0579703">
+>
+> The range above is `A1:C5`.
+  
+</details>
