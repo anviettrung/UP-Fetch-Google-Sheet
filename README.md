@@ -146,3 +146,20 @@ To import, navigate to `Window` -> `Package Manager`, select the **Fetch Google 
 > For most cases, you can use either CSV or TSV for the sheet format, and there is no difference between them. However, when your cells contain a comma or tab character, you may encounter issues. You should choose the format that does not conflict with your content.
   
 </details>
+
+<details>
+  <summary> What is the "Has Header" option used for? </summary>
+  
+> When the option is enabled, the fetch function will not count the first row as a record. Instead, it will use the cells of the first row as the names of fields for the other records.
+>
+> Example data that uses the **Has Header** option:
+>
+> <img width="311" alt="image" src="https://github.com/anviettrung/UP-Fetch-Google-Sheet/assets/40160468/c4efa571-9783-4a67-88f0-20cbb4332132">
+>
+> Example data with the **Has Header** option disabled:
+>
+> <img width="211" alt="image" src="https://github.com/anviettrung/UP-Fetch-Google-Sheet/assets/40160468/e262ab7a-e3d5-478c-a472-f1669e24ee10">
+>
+> Note: Cells with a green background are the selected range for fetching.
+  
+</details>
