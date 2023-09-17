@@ -25,7 +25,7 @@ To use this in your Unity project import it from Unity Package Manager. You can 
 
 ## Usage
 
-**Step 1**: Declare a **FetchConfig** variable, for example:
+**Step 1**: Declare a `FetchConfig` variable, for example:
 
 ```cs
 [Fetch("OnFetchSuccess")] 
@@ -35,6 +35,8 @@ public FetchConfig fetchConfig;
 In the example above, `OnFetchSuccess` is the name of the callback that will be called upon successful fetching.
 
 **Step 2**: Fill in all the fields in the config, for example:
+
+<img width="368" alt="image" src="https://github.com/anviettrung/UP-Fetch-Google-Sheet/assets/40160468/46c0a5b2-4478-40a9-a7aa-0a5fda6ac48b">
 
 - **Source**: URL of published sheet.
 - **Gid**: ID of sheet tab.
@@ -47,8 +49,37 @@ For more information on how to fill in all the fields above, please refer to the
 **Step 3**: Define callback `OnFetchSuccess`. For example, fill data into the list `units`:
 
 ```cs
+public List<UnitData> units;
+
+private void OnFetchSuccess(SheetTable table)
+{
+    FetchGoogleSheet.SheetTableToList(table, units);
+}
 ```
 
 Definition of type `UnitData`:
+
 ```cs
+public struct UnitData : IGoogleSheetDataSetter
+{
+    public string name;
+    public int health;
+    public int damage;
+
+    public void SetDataFromSheet(SheetRecord record)
+    {
+        name = record["name"];
+        health = int.Parse(record["health"]);
+        damage = int.Parse(record["damage"]);
+    }
+}
 ```
+
+**Sample data** (can be found [here](https://docs.google.com/spreadsheets/d/1x0M9_qgQiVXtdWL3DXXnf4Pp2fkVALfHcHoqETKwCnY/edit?usp=sharing))
+
+<img width="352" alt="image" src="https://github.com/anviettrung/UP-Fetch-Google-Sheet/assets/40160468/2fda61c3-a6ac-427f-9deb-be7eb0579703">
+
+**Step 4**: Press button `Fetch` on the inspector. Wait a few secs then data will be filled into the list.
+
+<img width="380" alt="image" src="https://github.com/anviettrung/UP-Fetch-Google-Sheet/assets/40160468/4b28183b-7f44-42db-a4ca-090313e52bde">
+
