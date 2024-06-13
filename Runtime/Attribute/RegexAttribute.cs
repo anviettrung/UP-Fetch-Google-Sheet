@@ -7,6 +7,8 @@ namespace AVT.FetchGoogleSheet
         public readonly string pattern;
         public readonly string errorMessage;
         public bool useFirstMatch = false;
+        public bool dynamicPattern;
+        public bool dynamicErrorMessage;
 
         public RegexAttribute(string pattern, string errorMessage = "String is not match regex.")
         {

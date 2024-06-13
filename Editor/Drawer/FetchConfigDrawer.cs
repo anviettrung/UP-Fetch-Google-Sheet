@@ -10,6 +10,8 @@ namespace AVT.FetchGoogleSheet
     {
         private bool foldout = true;
         private bool hasFetch;
+
+        private const int PropertyLineShowCount = 6;
         
         private static readonly float slh = EditorGUIUtility.singleLineHeight;
         private static readonly float svs = EditorGUIUtility.standardVerticalSpacing;
@@ -44,6 +46,10 @@ namespace AVT.FetchGoogleSheet
                 contentRect.y += slh;
                 
                 // Draw the property fields
+                var sourceType = property.FindPropertyRelative("sourceType");
+                EditorGUI.PropertyField(contentRect, sourceType);
+                
+                contentRect.y += slh + svs;
                 var source = property.FindPropertyRelative("source");
                 EditorGUI.PropertyField(contentRect, source);
 
@@ -109,7 +115,7 @@ namespace AVT.FetchGoogleSheet
             var height = slh + svs;
             if (foldout)
             {
-                height += (slh + svs) * 5; // 5 property fields
+                height += (slh + svs) * PropertyLineShowCount;
                 height += hasFetch ? slh + svs : 0;
             }
             
